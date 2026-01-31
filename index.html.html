@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rehearse Export</title>
+    <script type="text/javascript" src="http://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=LwOZnUbhT004AxeauhZohoRVQYU1KWpfgL1WCm5hgq3Rc81w7YX2nONQm9PcDFxlwqEF4f-CnMZc9OH7zg9JdJGCr13LMJheTrWUjdvJ9w92QQW8Hv8SXLqCOVd7Lni1pPK70swnpemyctXfvvAu0UCwQUZycXaTH-MqSHpTbBM" charset="UTF-8"></script><style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: Arial, sans-serif; background: #0f172a; color: #0f172a; }
+      .app { min-height: 100vh; padding: 24px; background: #0f172a; }
+      .panel { background: #f8fafc; border-radius: 12px; padding: 16px; }
+      .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; color: #e2e8f0; gap: 16px; flex-wrap: wrap; }
+      .header-brand { display: flex; align-items: center; gap: 12px; }
+      .logo-box { width: 84px; height: 84px; border-radius: 12px; border: 1px dashed #475569; display: flex; align-items: center; justify-content: center; color: #94a3b8; background: rgba(15, 23, 42, 0.6); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; overflow: hidden; }
+      .brand-inline { display: inline-flex; align-items: center; gap: 8px; }
+      .logo-box img { width: 100%; height: 100%; object-fit: contain; display: block; }
+      .title { font-size: 22px; font-weight: 700; color: #e2e8f0; }
+      .sub { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; }
+      .brand-email { font-size: 11px; color: #94a3b8; }
+      .layout { display: grid; grid-template-columns: 340px 1fr; gap: 16px; }
+      .parts-list { display: grid; gap: 10px; }
+      .part-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; background: #ffffff; }
+      .part-card.current { border-color: #3b82f6; background: #eff6ff; }
+      .part-card.next { border-color: #a855f7; background: #f5f3ff; }
+      .part-name { font-weight: 700; font-size: 16px; }
+      .part-time { font-size: 12px; color: #64748b; }
+      .part-names { font-size: 12px; color: #475569; margin-top: 6px; }
+      .subparts { margin-top: 8px; padding-top: 6px; border-top: 1px dashed #e2e8f0; display: grid; gap: 6px; }
+      .subpart-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; }
+      .subpart-row { font-size: 12px; color: #334155; }
+      .subpart-meta { font-size: 11px; color: #64748b; margin-left: 10px; }
+      .grids { display: grid; grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 16px; }
+      .grid-card { background: #ffffff; border-radius: 12px; border: 2px solid #cbd5f5; padding: 16px; }
+      .grid-card.next { border-color: #a855f7; background: #f5f3ff; }
+      .grid-card.current { border-color: #2563eb; background: #eff6ff; }
+      .grid-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; }
+      .grid-title { font-size: 28px; font-weight: 700; margin-top: 4px; }
+      .countdown { font-size: 48px; font-weight: 800; color: #dc2626; }
+      .get-ready { font-size: 24px; font-weight: 800; color: #dc2626; margin-top: 6px; }
+      .grid { position: relative; margin-top: 12px; border: 1px solid #cbd5f5; background: linear-gradient(#e2e8f0, #c7d2fe); }
+      .grid.current { background: linear-gradient(#bfdbfe, #93c5fd); }
+      .grid.next { background: linear-gradient(#ddd6fe, #c4b5fd); }
+      .circle { width: 42px; height: 42px; border-radius: 999px; background: #1d4ed8; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+      .controls { display: flex; align-items: center; gap: 16px; margin-top: 16px; color: #0f172a; }
+      .controls label { font-size: 12px; color: #475569; }
+      .audio-wrap { margin-top: 16px; }
+      .audio-wrap.top { margin-bottom: 16px; }
+      .audio-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+      .audio-row audio { width: 100%; max-width: 640px; height: 46px; display: block; }
+      .notice { color: #b91c1c; font-size: 12px; margin-top: 8px; }
+      .footer-brand { margin-top: 16px; font-size: 11px; color: #94a3b8; text-align: center; }
+      .info-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 12px; }
+      .summary-card { background: #ffffff; border: 1px solid #cbd5f5; border-radius: 10px; padding: 12px; margin-bottom: 14px; }
+      .summary-title { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #1d4ed8; margin-bottom: 8px; }
+      .summary-section { border-top: 1px dashed #e2e8f0; padding-top: 10px; margin-top: 10px; }
+      .summary-header { display: grid; gap: 2px; }
+      .summary-part { font-size: 14px; font-weight: 700; color: #0f172a; }
+      .summary-time { font-size: 12px; color: #475569; }
+      .summary-notes { font-size: 12px; color: #334155; }
+      .summary-indent-1 { margin-left: 14px; }
+      .summary-indent-2 { margin-left: 28px; }
+      .summary-subparts { margin-top: 6px; display: grid; gap: 6px; }
+      .summary-subpart { font-size: 12px; color: #0f172a; font-weight: 600; }
+      .summary-people { font-size: 12px; color: #334155; }
+      .summary-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #1d4ed8; background: #eff6ff; border: 2px solid #1d4ed8; padding: 6px 10px; border-radius: 999px; cursor: pointer; }
+      .summary-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.7); z-index: 60; padding: 16px; }
+      .summary-overlay.active { display: flex; }
+      .summary-overlay-card { background: #ffffff; border-radius: 16px; padding: 16px; border: 2px solid #cbd5f5; width: min(760px, 95vw); max-height: 85vh; overflow: auto; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.35); }
+      .summary-overlay-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
+      .summary-close { border: 1px solid #cbd5f5; background: #f8fafc; border-radius: 8px; padding: 6px 10px; font-size: 12px; cursor: pointer; }
+      .info-row { font-size: 12px; color: #334155; margin-top: 4px; }
+      .info-label { font-weight: 700; color: #475569; }
+      .phone-list { margin-top: 6px; padding-left: 16px; }
+      .phone-list li { font-size: 12px; color: #334155; }
+      .filter-bar { margin-top: 0; padding: 10px 12px; border: 2px solid #1d4ed8; border-radius: 10px; background: #eff6ff; display: flex; align-items: center; gap: 10px; box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12); }
+      .filter-label { font-size: 12px; font-weight: 800; color: #1d4ed8; text-transform: uppercase; letter-spacing: 0.08em; }
+      .legend { margin-top: 12px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; background: #ffffff; }
+      .legend-title { font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 6px; }
+      .legend-grid { display: grid; grid-template-columns: repeat(2, minmax(120px, 1fr)); gap: 6px; font-size: 12px; color: #334155; }
+      .legend-item { display: flex; align-items: center; gap: 6px; }
+      .legend-dot { width: 18px; height: 18px; border-radius: 999px; background: #1d4ed8; color: #fff; font-weight: 700; font-size: 10px; display: flex; align-items: center; justify-content: center; }
+      .jump-link { margin-top: 6px; font-size: 11px; color: #1d4ed8; text-decoration: underline; cursor: pointer; }
+      .filter-hit { color: #16a34a; font-weight: 800; }
+      .timeline-card { margin-top: 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px; }
+      .timeline-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; margin-bottom: 6px; }
+      .timeline-track { position: relative; height: 44px; border: 1px solid #cbd5f5; border-radius: 8px; background: #f1f5f9; overflow: hidden; }
+      .timeline-segment { position: absolute; top: 0; height: 100%; background: #c7d2fe; border: 1px solid #818cf8; color: #1e1b4b; font-size: 10px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .timeline-divider { position: absolute; top: 0; height: 100%; width: 3px; background: #64748b; }
+      .timeline-playhead { position: absolute; top: 0; height: 100%; width: 3px; background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.7); }
+      .timeline-range { margin-top: 4px; font-size: 11px; color: #64748b; }
+      .jump-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.6); z-index: 50; }
+      .jump-overlay.active { display: flex; }
+      .jump-overlay-card { background: #ffffff; border-radius: 16px; padding: 24px 32px; border: 3px solid #dc2626; text-align: center; box-shadow: 0 16px 40px rgba(15, 23, 42, 0.35); }
+      .jump-overlay-count { font-size: 64px; font-weight: 800; color: #dc2626; line-height: 1; }
+      .jump-overlay-label { margin-top: 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.12em; color: #475569; font-weight: 700; }
+      @media (max-width: 1100px) {
+        .layout { grid-template-columns: 1fr; }
+        .grids { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="jump-overlay" id="jumpOverlay">
+        <div class="jump-overlay-card">
+          <div class="jump-overlay-count" id="jumpOverlayCount">5</div>
+          <div class="jump-overlay-label">Get Ready</div>
+        </div>
+      </div>
+      <div class="header">
+        <div class="header-brand">
+          <div class="logo-box" id="logoBox">Logo</div>
+          <div>
+            <div class="title">Rehearse</div>
+            <div class="sub brand-inline">
+              <span>by ORGN Media</span>
+            </div>
+            <div class="brand-email">helo@orgnmedia.com</div>
+            <div class="title" id="performanceTitle"></div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="audio-wrap top panel">
+        <div class="audio-row">
+          <button id="playButton" style="padding:10px 16px; border-radius:10px; border:1px solid #cbd5f5; background:#fff; cursor:pointer; font-weight:600;">
+            Tap to Play
+          </button>
+          <audio id="audio" controls></audio>
+          <div class="filter-bar">
+            <div class="filter-label">Filter by person</div>
+            <select id="personFilter" style="padding:6px 8px; border:1px solid #cbd5f5; border-radius:6px;">
+              <option value="">All</option>
+            </select>
+          </div>
+          <label style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:800; color:#1d4ed8; text-transform:uppercase; letter-spacing:0.08em;">
+            <input type="checkbox" id="ringToggle" checked />
+            Ring at T-10
+          </label>
+        </div>
+        <div class="notice" id="audioNotice"></div>
+        <div class="notice" id="audioLink"></div>
+      </div>
+      <div class="timeline-card panel" id="timelineCard">
+        <div class="timeline-label">Subpart Timeline</div>
+        <div class="timeline-track" id="timelineTrack"></div>
+        <div class="timeline-range" id="timelineRange"></div>
+      </div>
+
+      <div class="layout">
+        <div class="panel">
+          <button class="summary-toggle" id="summaryToggle">Open Summary</button>
+          <div class="summary-overlay" id="summaryOverlay">
+            <div class="summary-overlay-card">
+              <div class="summary-overlay-header">
+                <div class="summary-title">Summary</div>
+                <button class="summary-close" id="summaryClose">Close</button>
+              </div>
+              <div class="summary-card" id="summaryCard">
+            <div class="info-row"><span class="info-label">Date:</span> <span id="summaryDate">--</span></div>
+            <div class="info-row"><span class="info-label">Call Time:</span> <span id="summaryCallTime">--</span></div>
+            <div class="info-row"><span class="info-label">Location:</span> <span id="summaryLocation">--</span></div>
+            <div class="info-row"><span class="info-label">Description:</span> <span id="summaryDescription">--</span></div>
+            <div class="info-row">
+              <span class="info-label">Phone Numbers:</span>
+              <ul class="phone-list" id="summaryPhones"></ul>
+            </div>
+            <div id="summaryParts"></div>
+              </div>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="part-name">Performance Info</div>
+            <div class="info-row"><span class="info-label">Date:</span> <span id="infoDate">--</span></div>
+            <div class="info-row"><span class="info-label">Call Time:</span> <span id="infoCallTime">--</span></div>
+            <div class="info-row"><span class="info-label">Location:</span> <span id="infoLocation">--</span></div>
+            <div class="info-row"><span class="info-label">Description:</span> <span id="infoDescription">--</span></div>
+            <div class="info-row">
+              <span class="info-label">Phone Numbers:</span>
+              <ul class="phone-list" id="infoPhones"></ul>
+            </div>
+          </div>
+          <div class="part-name" style="margin-bottom: 10px;">Parts</div>
+          <div class="parts-list" id="partsList"></div>
+        </div>
+        <div class="panel">
+          <div class="grids">
+            <div class="grid-card next">
+              <div class="grid-label">Next</div>
+              <div class="grid-title" id="nextName">-</div>
+              <div class="countdown" id="nextCountdown"></div>
+              <div class="get-ready" id="nextReady"></div>
+              <div class="grid next" id="nextGrid"></div>
+            </div>
+            <div class="grid-card current">
+              <div class="grid-label">Current</div>
+              <div class="grid-title" id="currentName">-</div>
+              <div class="grid current" id="currentGrid"></div>
+            </div>
+          </div>
+          
+          
+          <div class="legend" id="legendWrap">
+            <div class="legend-title">Legend</div>
+            <div class="legend-grid" id="legendGrid"></div>
+          </div>
+          <div class="footer-brand">
+            <div>Rehearse by ORGN Media</div>
+            <div class="brand-email">helo@orgnmedia.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const DATA = {"performance":{"id":"93fba6d5-526d-4c16-a848-0bcb110ee0b8","title":"Needham LNY 2026","stage_orientation":"bottom","description":"Call time is 5PM on 2/01\n","date":"2026-02-02T03:00:00","location":" 1155 Central Avenue, Needham, M","call_time":"17:00","phone_numbers":"Coach Dennis Chen: 9784309714","contacts":[{"id":"0e5bda93-b511-425a-b9d8-59dd516295f9","name":"Coach Dennis Chen","phone":"9784309714","include_in_export":true}]},"parts":[{"id":"b9c84553-8e9c-441b-88a3-67cb238ac4a9","name":"Group Longfist","description":"Allen Anray Sophia (maybe emmanuel) ","order":2,"timepoint_seconds":23,"timepoint_end_seconds":40},{"id":"f052752b-1ec0-4b3f-9480-2e3996052123","name":"B Staff","description":"","order":5,"timepoint_seconds":111,"timepoint_end_seconds":157},{"id":"25b4418f-1380-4e1b-b0db-e50ea3841e4d","name":"Ending Pose","description":"","order":7,"timepoint_seconds":297,"timepoint_end_seconds":null},{"id":"11f14fdf-3299-48f8-8ce6-7ef560b97dd6","name":"Jumps/Tumbling","description":"Cartwheel/Aerial (everyone), jump front aerial (yeyang, emmanuel, allen, anray, sophia), tumbling (allen, anray, sophia)","order":3,"timepoint_seconds":40,"timepoint_end_seconds":85},{"id":"de0020db-1c9b-407f-b5e1-7ec00366c30e","name":"C Staff","description":"","order":4,"timepoint_seconds":85,"timepoint_end_seconds":106},{"id":"2c00863e-d498-454e-b020-b31e3b3f1cab","name":"Solos","description":"","order":6,"timepoint_seconds":158,"timepoint_end_seconds":296},{"id":"3d8e14f3-7cd8-42fd-be37-366a59fbf2e8","name":"C Dao","description":"one section","order":1,"timepoint_seconds":0,"timepoint_end_seconds":22}],"positionsByPart":{"11f14fdf-3299-48f8-8ce6-7ef560b97dd6":[{"student_id":"f9379fd9-64d4-4785-a12d-5d08520b382e","student_name":"Dhruv Lad","x":3,"y":5},{"student_id":"9ab79940-65ad-4c4b-b822-c6f66ebb1441","student_name":"Kevin Zhang","x":11,"y":5},{"student_id":"40626e6c-ae41-4158-bd13-7f875b227260","student_name":"Emmanuel","x":11,"y":3},{"student_id":"0f8207a5-1d47-4f60-be87-c2b4ccb5bfbe","student_name":"Anray","x":11,"y":2},{"student_id":"5af53bfe-5c7c-461c-98f3-cdab10f6cdfc","student_name":"Allen","x":3,"y":1},{"student_id":"5aa12bea-e39f-44be-a424-9fea510c3da5","student_name":"Sophia","x":11,"y":1},{"student_id":"d93b4e3b-dfce-4eaa-ba9d-603774aaf54e","student_name":"Dennis Chen (Coach)","x":3,"y":0},{"student_id":"f91c36c9-7a2f-4258-bfdc-cf5c50082c62","student_name":"Brayden Liu","x":3,"y":2},{"student_id":"88d6750d-f0b5-4292-8395-9bb0edee5c51","student_name":"Peter Nguyen","x":11,"y":4},{"student_id":"9bc87be2-2051-4216-b4df-038f23c7896b","student_name":"Yeyang Guo","x":3,"y":3},{"student_id":"50eaeb69-8ab0-4f66-a8fd-d5dca5371ade","student_name":"Owen Zhu","x":3,"y":4}],"25b4418f-1380-4e1b-b0db-e50ea3841e4d":[{"student_id":"d93b4e3b-dfce-4eaa-ba9d-603774aaf54e","student_name":"Dennis Chen (Coach)","x":6,"y":4},{"student_id":"5aa12bea-e39f-44be-a424-9fea510c3da5","student_name":"Sophia","x":8,"y":4},{"student_id":"40626e6c-ae41-4158-bd13-7f875b227260","student_name":"Emmanuel","x":2,"y":4},{"student_id":"0f8207a5-1d47-4f60-be87-c2b4ccb5bfbe","student_name":"Anray","x":4,"y":4},{"student_id":"5af53bfe-5c7c-461c-98f3-cdab10f6cdfc","student_name":"Allen","x":10,"y":4},{"student_id":"9ab79940-65ad-4c4b-b822-c6f66ebb1441","student_name":"Kevin Zhang","x":7,"y":5},{"student_id":"f91c36c9-7a2f-4258-bfdc-cf5c50082c62","student_name":"Brayden Liu","x":9,"y":5},{"student_id":"9bc87be2-2051-4216-b4df-038f23c7896b","student_name":"Yeyang Guo","x":11,"y":5},{"student_id":"50eaeb69-8ab0-4f66-a8fd-d5dca5371ade","student_name":"Owen Zhu","x":3,"y":5},{"student_id":"88d6750d-f0b5-4292-8395-9bb0edee5c51","student_name":"Peter Nguyen","x":5,"y":5},{"student_id":"f9379fd9-64d4-4785-a12d-5d08520b382e","student_name":"Dhruv Lad","x":1,"y":5}],"f052752b-1ec0-4b3f-9480-2e3996052123":[{"student_id":"40626e6c-ae41-4158-bd13-7f875b227260","student_name":"Emmanuel","x":7,"y":4},{"student_id":"f91c36c9-7a2f-4258-bfdc-cf5c50082c62","student_name":"Brayden Liu","x":5,"y":4},{"student_id":"f9379fd9-64d4-4785-a12d-5d08520b382e","student_name":"Dhruv Lad","x":8,"y":3},{"student_id":"9ab79940-65ad-4c4b-b822-c6f66ebb1441","student_name":"Kevin Zhang","x":6,"y":3}],"de0020db-1c9b-407f-b5e1-7ec00366c30e":[{"student_id":"f91c36c9-7a2f-4258-bfdc-cf5c50082c62","student_name":"Brayden Liu","x":6,"y":5},{"student_id":"88d6750d-f0b5-4292-8395-9bb0edee5c51","student_name":"Peter Nguyen","x":8,"y":5},{"student_id":"9ab79940-65ad-4c4b-b822-c6f66ebb1441","student_name":"Kevin Zhang","x":4,"y":5},{"student_id":"50eaeb69-8ab0-4f66-a8fd-d5dca5371ade","student_name":"Owen Zhu","x":5,"y":4},{"student_id":"9bc87be2-2051-4216-b4df-038f23c7896b","student_name":"Yeyang Guo","x":7,"y":4}],"b9c84553-8e9c-441b-88a3-67cb238ac4a9":[{"student_id":"5aa12bea-e39f-44be-a424-9fea510c3da5","student_name":"Sophia","x":8,"y":4},{"student_id":"0f8207a5-1d47-4f60-be87-c2b4ccb5bfbe","student_name":"Anray","x":7,"y":3},{"student_id":"9332706e-7a5e-4b61-a268-6a8172d0a27c","student_name":"Mia S","x":6,"y":4},{"student_id":"5af53bfe-5c7c-461c-98f3-cdab10f6cdfc","student_name":"Allen","x":5,"y":3}],"3d8e14f3-7cd8-42fd-be37-366a59fbf2e8":[{"student_id":"f91c36c9-7a2f-4258-bfdc-cf5c50082c62","student_name":"Brayden Liu","x":6,"y":5},{"student_id":"9ab79940-65ad-4c4b-b822-c6f66ebb1441","student_name":"Kevin Zhang","x":5,"y":4},{"student_id":"50eaeb69-8ab0-4f66-a8fd-d5dca5371ade","student_name":"Owen Zhu","x":7,"y":4}]},"subpartsByPart":{"11f14fdf-3299-48f8-8ce6-7ef560b97dd6":[{"id":"30836eae-78ae-4049-9521-81d8baa3a456","title":"Cartwheel/Aerial","description":"","mode":"position","timepoint_seconds":null,"timepoint_end_seconds":null},{"id":"a4f00596-8c69-4e21-9259-ba3729d9221e","title":"Jump Front or Jump Front Aerial","description":"","mode":"position","timepoint_seconds":null,"timepoint_end_seconds":null},{"id":"bd46ae40-60ed-45cb-a053-5e0ae15b41e2","title":"Tumbling","description":null,"mode":"position","timepoint_seconds":null,"timepoint_end_seconds":null}],"2c00863e-d498-454e-b020-b31e3b3f1cab":[{"id":"810c6322-3b99-4894-9d7e-78dbe7ba4848","title":"Emmanuel Staff","description":"2 Parts","mode":"both","timepoint_seconds":157,"timepoint_end_seconds":187},{"id":"74ef0602-6631-4795-b4b1-aa622f0bd712","title":"Allen and Mia Longfist","description":"2 Parts","mode":"position","timepoint_seconds":188,"timepoint_end_seconds":215},{"id":"7f3de96f-c7e5-4e64-99f9-7247ae73bbcc","title":"Anray Dao","description":"2 Parts","mode":"position","timepoint_seconds":216,"timepoint_end_seconds":240},{"id":"2f51104b-ec6e-488f-bfbd-ef211328a8ca","title":"Sophia Qiang","description":"2 parts","mode":"position","timepoint_seconds":240,"timepoint_end_seconds":268},{"id":"d81f9b2d-820c-4946-92f4-f3e01891401d","title":"Dennis","description":"1.5 Parts","mode":"position","timepoint_seconds":269,"timepoint_end_seconds":289}]},"subpartPositionsBySubpart":{"30836eae-78ae-4049-9521-81d8baa3a456":[{"student_id":"f9379fd9-64d4-4785-a12d-5d08520b382e","student_name":"Dhruv Lad","x":2,"y":7},{"student_id":"50eaeb69-8ab0-4f66-a8fd-d5dca5371ade","student_name":"Owen Zhu","x":2,"y":6},{"student_id":"9bc87be2-2051-4216-b4df-038f23c7896b","student_name":"Yeyang Guo","x":2,"y":5},{"student_id":"f91c36c9-7a2f-4258-bfdc-cf5c50082c62","student_name":"Brayden Liu","x":2,"y":4},{"student_id":"5af53bfe-5c7c-461c-98f3-cdab10f6cdfc","student_name":"Allen","x":2,"y":3},{"student_id":"9332706e-7a5e-4b61-a268-6a8172d0a27c","student_name":"Mia S","x":2,"y":2},{"student_id":"9ab79940-65ad-4c4b-b822-c6f66ebb1441","student_name":"Kevin Zhang","x":8,"y":7},{"student_id":"0f8207a5-1d47-4f60-be87-c2b4ccb5bfbe","student_name":"Anray","x":8,"y":6},{"student_id":"88d6750d-f0b5-4292-8395-9bb0edee5c51","student_name":"Peter Nguyen","x":8,"y":5},{"student_id":"40626e6c-ae41-4158-bd13-7f875b227260","student_name":"Emmanuel","x":8,"y":4},{"student_id":"5aa12bea-e39f-44be-a424-9fea510c3da5","student_name":"Sophia","x":8,"y":3}],"a4f00596-8c69-4e21-9259-ba3729d9221e":[{"student_id":"f9379fd9-64d4-4785-a12d-5d08520b382e","student_name":"Dhruv Lad","x":9,"y":7},{"student_id":"50eaeb69-8ab0-4f66-a8fd-d5dca5371ade","student_name":"Owen Zhu","x":9,"y":6},{"student_id":"9bc87be2-2051-4216-b4df-038f23c7896b","student_name":"Yeyang Guo","x":9,"y":5},{"student_id":"f91c36c9-7a2f-4258-bfdc-cf5c50082c62","student_name":"Brayden Liu","x":9,"y":4},{"student_id":"5af53bfe-5c7c-461c-98f3-cdab10f6cdfc","student_name":"Allen","x":9,"y":3},{"student_id":"9332706e-7a5e-4b61-a268-6a8172d0a27c","student_name":"Mia S","x":9,"y":2},{"student_id":"9ab79940-65ad-4c4b-b822-c6f66ebb1441","student_name":"Kevin Zhang","x":3,"y":7},{"student_id":"0f8207a5-1d47-4f60-be87-c2b4ccb5bfbe","student_name":"Anray","x":3,"y":6},{"student_id":"88d6750d-f0b5-4292-8395-9bb0edee5c51","student_name":"Peter Nguyen","x":3,"y":5},{"student_id":"40626e6c-ae41-4158-bd13-7f875b227260","student_name":"Emmanuel","x":3,"y":4},{"student_id":"5aa12bea-e39f-44be-a424-9fea510c3da5","student_name":"Sophia","x":3,"y":3}]},"subpartOrderBySubpart":{"30836eae-78ae-4049-9521-81d8baa3a456":[{"student_id":"f9379fd9-64d4-4785-a12d-5d08520b382e","student_name":"Dhruv Lad"},{"student_id":"50eaeb69-8ab0-4f66-a8fd-d5dca5371ade","student_name":"Owen Zhu"},{"student_id":"9bc87be2-2051-4216-b4df-038f23c7896b","student_name":"Yeyang Guo"},{"student_id":"f91c36c9-7a2f-4258-bfdc-cf5c50082c62","student_name":"Brayden Liu"},{"student_id":"5af53bfe-5c7c-461c-98f3-cdab10f6cdfc","student_name":"Allen"},{"student_id":"9332706e-7a5e-4b61-a268-6a8172d0a27c","student_name":"Mia S"},{"student_id":"9ab79940-65ad-4c4b-b822-c6f66ebb1441","student_name":"Kevin Zhang"},{"student_id":"0f8207a5-1d47-4f60-be87-c2b4ccb5bfbe","student_name":"Anray"},{"student_id":"88d6750d-f0b5-4292-8395-9bb0edee5c51","student_name":"Peter Nguyen"},{"student_id":"40626e6c-ae41-4158-bd13-7f875b227260","student_name":"Emmanuel"},{"student_id":"5aa12bea-e39f-44be-a424-9fea510c3da5","student_name":"Sophia"}],"a4f00596-8c69-4e21-9259-ba3729d9221e":[{"student_id":"f9379fd9-64d4-4785-a12d-5d08520b382e","student_name":"Dhruv Lad"},{"student_id":"9ab79940-65ad-4c4b-b822-c6f66ebb1441","student_name":"Kevin Zhang"},{"student_id":"50eaeb69-8ab0-4f66-a8fd-d5dca5371ade","student_name":"Owen Zhu"},{"student_id":"0f8207a5-1d47-4f60-be87-c2b4ccb5bfbe","student_name":"Anray"},{"student_id":"9bc87be2-2051-4216-b4df-038f23c7896b","student_name":"Yeyang Guo"},{"student_id":"88d6750d-f0b5-4292-8395-9bb0edee5c51","student_name":"Peter Nguyen"},{"student_id":"f91c36c9-7a2f-4258-bfdc-cf5c50082c62","student_name":"Brayden Liu"},{"student_id":"5af53bfe-5c7c-461c-98f3-cdab10f6cdfc","student_name":"Allen"},{"student_id":"40626e6c-ae41-4158-bd13-7f875b227260","student_name":"Emmanuel"},{"student_id":"5aa12bea-e39f-44be-a424-9fea510c3da5","student_name":"Sophia"},{"student_id":"9332706e-7a5e-4b61-a268-6a8172d0a27c","student_name":"Mia S"}],"74ef0602-6631-4795-b4b1-aa622f0bd712":[{"student_id":"5af53bfe-5c7c-461c-98f3-cdab10f6cdfc","student_name":"Allen"},{"student_id":"9332706e-7a5e-4b61-a268-6a8172d0a27c","student_name":"Mia S"}],"bd46ae40-60ed-45cb-a053-5e0ae15b41e2":[{"student_id":"5af53bfe-5c7c-461c-98f3-cdab10f6cdfc","student_name":"Allen"},{"student_id":"5aa12bea-e39f-44be-a424-9fea510c3da5","student_name":"Sophia"},{"student_id":"0f8207a5-1d47-4f60-be87-c2b4ccb5bfbe","student_name":"Anray"}],"810c6322-3b99-4894-9d7e-78dbe7ba4848":[{"student_id":"40626e6c-ae41-4158-bd13-7f875b227260","student_name":"Emmanuel"}],"7f3de96f-c7e5-4e64-99f9-7247ae73bbcc":[{"student_id":"0f8207a5-1d47-4f60-be87-c2b4ccb5bfbe","student_name":"Anray"}],"2f51104b-ec6e-488f-bfbd-ef211328a8ca":[{"student_id":"5aa12bea-e39f-44be-a424-9fea510c3da5","student_name":"Sophia"}],"d81f9b2d-820c-4946-92f4-f3e01891401d":[{"student_id":"d93b4e3b-dfce-4eaa-ba9d-603774aaf54e","student_name":"Dennis Chen (Coach)"}]},"musicUrl":"https://quqvudqzztlmgrwqudho.supabase.co/storage/v1/object/public/performance-music/music/performance-93fba6d5-526d-4c16-a848-0bcb110ee0b8-1769653159485-Needham 2026-1.mp3","embeddedAudioDataUrl":"","logoUrl":"https://quqvudqzztlmgrwqudho.supabase.co/storage/v1/object/public/app-assets/logo/app-logo-1769838031457-White-transparent.png"};
+    </script>
+    <script>
+      const gridCols = 12;
+      const gridRows = 8;
+      const cellSize = 50;
+
+      const audio = document.getElementById('audio');
+      const playButton = document.getElementById('playButton');
+      const audioNotice = document.getElementById('audioNotice');
+      const audioLink = document.getElementById('audioLink');
+      const ringToggle = document.getElementById('ringToggle');
+      const partsList = document.getElementById('partsList');
+      const performanceTitle = document.getElementById('performanceTitle');
+      const infoDate = document.getElementById('infoDate');
+      const infoCallTime = document.getElementById('infoCallTime');
+      const infoLocation = document.getElementById('infoLocation');
+      const infoDescription = document.getElementById('infoDescription');
+      const infoPhones = document.getElementById('infoPhones');
+      const summaryDate = document.getElementById('summaryDate');
+      const summaryCallTime = document.getElementById('summaryCallTime');
+      const summaryLocation = document.getElementById('summaryLocation');
+      const summaryDescription = document.getElementById('summaryDescription');
+      const summaryPhones = document.getElementById('summaryPhones');
+      const summaryParts = document.getElementById('summaryParts');
+      const summaryToggle = document.getElementById('summaryToggle');
+      const summaryOverlay = document.getElementById('summaryOverlay');
+      const summaryClose = document.getElementById('summaryClose');
+      const currentName = document.getElementById('currentName');
+      const nextName = document.getElementById('nextName');
+      const nextCountdown = document.getElementById('nextCountdown');
+      const nextReady = document.getElementById('nextReady');
+      const currentGrid = document.getElementById('currentGrid');
+      const nextGrid = document.getElementById('nextGrid');
+      const logoBox = document.getElementById('logoBox');
+      const personFilter = document.getElementById('personFilter');
+      const legendWrap = document.getElementById('legendWrap');
+      const legendGrid = document.getElementById('legendGrid');
+      const timelineCard = document.getElementById('timelineCard');
+      const timelineTrack = document.getElementById('timelineTrack');
+      const timelineRange = document.getElementById('timelineRange');
+      const jumpOverlay = document.getElementById('jumpOverlay');
+      const jumpOverlayCount = document.getElementById('jumpOverlayCount');
+
+      const orderedParts = [...(DATA.parts || [])].sort((a, b) => {
+        const aTime = typeof a.timepoint_seconds === 'number' ? a.timepoint_seconds : Infinity;
+        const bTime = typeof b.timepoint_seconds === 'number' ? b.timepoint_seconds : Infinity;
+        if (aTime === bTime) return (a.order || 0) - (b.order || 0);
+        return aTime - bTime;
+      });
+
+      const timepointParts = orderedParts.filter((p) => typeof p.timepoint_seconds === 'number');
+      performanceTitle.textContent = DATA.performance?.title || 'Rehearse Export';
+      if (infoDate) infoDate.textContent = DATA.performance?.date ? new Date(DATA.performance.date).toLocaleString() : '--';
+      if (infoCallTime) infoCallTime.textContent = DATA.performance?.call_time || '--';
+      if (infoLocation) infoLocation.textContent = DATA.performance?.location || '--';
+      if (infoDescription) infoDescription.textContent = DATA.performance?.description || '--';
+      if (summaryDate) summaryDate.textContent = DATA.performance?.date ? new Date(DATA.performance.date).toLocaleString() : '--';
+      if (summaryCallTime) summaryCallTime.textContent = DATA.performance?.call_time || '--';
+      if (summaryLocation) summaryLocation.textContent = DATA.performance?.location || '--';
+      if (summaryDescription) summaryDescription.textContent = DATA.performance?.description || '--';
+      if (infoPhones) {
+        infoPhones.innerHTML = '';
+        const selectedContacts = (DATA.performance?.contacts || []).map((c) => c.name + ': ' + c.phone);
+        const phones = selectedContacts.length > 0
+          ? selectedContacts
+          : (DATA.performance?.phone_numbers || '').split(/\r?\n/).map((p) => p.trim()).filter(Boolean);
+        if (phones.length === 0) {
+          const li = document.createElement('li');
+          li.textContent = '--';
+          infoPhones.appendChild(li);
+        } else {
+          phones.forEach((p) => {
+            const li = document.createElement('li');
+            li.textContent = p;
+            infoPhones.appendChild(li);
+          });
+        }
+      }
+      if (summaryPhones) {
+        summaryPhones.innerHTML = '';
+        const selectedContacts = (DATA.performance?.contacts || []).map((c) => c.name + ': ' + c.phone);
+        const phones = selectedContacts.length > 0
+          ? selectedContacts
+          : (DATA.performance?.phone_numbers || '').split(/\r?\n/).map((p) => p.trim()).filter(Boolean);
+        if (phones.length === 0) {
+          const li = document.createElement('li');
+          li.textContent = '--';
+          summaryPhones.appendChild(li);
+        } else {
+          phones.forEach((p) => {
+            const li = document.createElement('li');
+            li.textContent = p;
+            summaryPhones.appendChild(li);
+          });
+        }
+      }
+
+      if (DATA.logoUrl && logoBox) {
+        const img = document.createElement('img');
+        img.src = DATA.logoUrl;
+        img.alt = 'Logo';
+        logoBox.textContent = '';
+        logoBox.appendChild(img);
+      }
+
+      function openSummary() {
+        if (summaryOverlay) summaryOverlay.classList.add('active');
+      }
+      function closeSummary() {
+        if (summaryOverlay) summaryOverlay.classList.remove('active');
+      }
+      if (summaryToggle) summaryToggle.addEventListener('click', openSummary);
+      if (summaryClose) summaryClose.addEventListener('click', closeSummary);
+      if (summaryOverlay) {
+        summaryOverlay.addEventListener('click', (event) => {
+          if (event.target === summaryOverlay) closeSummary();
+        });
+      }
+
+      if (DATA.embeddedAudioDataUrl) {
+        audio.src = DATA.embeddedAudioDataUrl;
+      } else if (DATA.musicUrl) {
+        audio.src = DATA.musicUrl;
+        audio.crossOrigin = 'anonymous';
+        audio.preload = 'auto';
+        audioLink.innerHTML = 'Audio URL: <a href="' + DATA.musicUrl + '" target="_blank">Open audio</a>';
+      } else {
+        audioNotice.textContent = 'No music file available in this export.';
+      }
+      if (audio) {
+        audio.setAttribute('playsinline', '');
+        audio.setAttribute('webkit-playsinline', '');
+        audio.controls = true;
+      }
+      audio.load();
+
+      playButton.addEventListener('click', async () => {
+        try {
+          await audio.play();
+          audioNotice.textContent = '';
+        } catch (e) {
+          audioNotice.textContent = 'Tap play again if audio is blocked.';
+        }
+      });
+
+      audio.addEventListener('error', () => {
+        audioNotice.textContent = 'Audio failed to load. Try opening the audio URL.';
+      });
+
+      let prevTimeToNext = null;
+
+      function getInitials(name) {
+        if (!name) return '?';
+        const chunks = name.trim().split(/\s+/);
+        if (chunks.length === 1) return chunks[0].slice(0, 2).toUpperCase();
+        return (chunks[0][0] + chunks[chunks.length - 1][0]).toUpperCase();
+      }
+
+      function getCurrentIndex(currentTime) {
+        if (timepointParts.length === 0) return -1;
+        let idx = 0;
+        for (let i = 0; i < timepointParts.length; i++) {
+          const start = timepointParts[i].timepoint_seconds || 0;
+          const end = timepointParts[i].timepoint_end_seconds;
+          if (currentTime >= start && (end === null || end === undefined || currentTime < end)) {
+            idx = i;
+          } else if (currentTime >= start) {
+            idx = i;
+          }
+        }
+        return idx;
+      }
+
+      function formatTime(value) {
+        if (value === null || value === undefined || value === '') return '--:--';
+        const total = Number(value);
+        if (!Number.isFinite(total)) return '--:--';
+        const mins = Math.floor(total / 60);
+        const secs = Math.floor(total % 60);
+        return mins + ':' + String(secs).padStart(2, '0');
+      }
+
+      function playRing() {
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) return;
+          const ctx = new AudioCtx();
+          const gain = ctx.createGain();
+          gain.gain.value = 0.18;
+          gain.connect(ctx.destination);
+
+          const beep = (start) => {
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = 520;
+            osc.connect(gain);
+            osc.start(start);
+            osc.stop(start + 0.12);
+          };
+
+          const now = ctx.currentTime;
+          beep(now);
+          beep(now + 0.32);
+          beep(now + 0.64);
+          setTimeout(() => ctx.close(), 1200);
+        } catch (e) {}
+      }
+
+      function playBeep() {
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) return;
+          const ctx = new AudioCtx();
+          const gain = ctx.createGain();
+          gain.gain.value = 0.16;
+          gain.connect(ctx.destination);
+          const osc = ctx.createOscillator();
+          osc.type = 'sine';
+          osc.frequency.value = 520;
+          osc.connect(gain);
+          const now = ctx.currentTime;
+          osc.start(now);
+          osc.stop(now + 0.12);
+          setTimeout(() => ctx.close(), 300);
+        } catch (e) {}
+      }
+
+      function renderGrid(container, positions, variant) {
+        container.innerHTML = '';
+        container.style.width = (gridCols * cellSize) + 'px';
+        container.style.height = (gridRows * cellSize) + 'px';
+        container.style.backgroundSize = cellSize + 'px ' + cellSize + 'px';
+        container.style.backgroundImage =
+          'linear-gradient(rgba(0,0,0,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.08) 1px, transparent 1px)';
+
+        (positions || []).forEach((pos) => {
+          const el = document.createElement('div');
+          el.style.position = 'absolute';
+          el.style.left = (pos.x * cellSize) + 'px';
+          el.style.top = (pos.y * cellSize) + 'px';
+          el.style.width = cellSize + 'px';
+          el.style.height = cellSize + 'px';
+          el.style.display = 'flex';
+          el.style.alignItems = 'center';
+          el.style.justifyContent = 'center';
+
+          const bubble = document.createElement('div');
+          bubble.className = 'circle';
+          bubble.textContent = getInitials(pos.student_name || '');
+          el.appendChild(bubble);
+          container.appendChild(el);
+        });
+      }
+
+      function renderLegend(positions) {
+        if (!legendGrid) return;
+        legendGrid.innerHTML = '';
+        const filterName = personFilter ? personFilter.value : '';
+        const seen = new Set();
+        (positions || []).forEach((pos) => {
+          const name = pos.student_name || 'Unknown';
+          if (seen.has(name)) return;
+          seen.add(name);
+          const item = document.createElement('div');
+          item.className = 'legend-item';
+
+          const dot = document.createElement('div');
+          dot.className = 'legend-dot';
+          dot.textContent = getInitials(name);
+          item.appendChild(dot);
+
+          const label = document.createElement('div');
+          if (filterName && name === filterName) {
+            const strong = document.createElement('strong');
+            strong.textContent = name;
+            label.appendChild(strong);
+          } else {
+            label.textContent = name;
+          }
+          item.appendChild(label);
+          legendGrid.appendChild(item);
+        });
+
+        if (legendWrap) {
+          legendWrap.style.display = seen.size === 0 ? 'none' : '';
+        }
+      }
+
+      function renderTimeline(part, currentTime) {
+        if (!timelineTrack || !timelineRange || !timelineCard) return;
+        if (!part) {
+          timelineCard.style.display = 'none';
+          return;
+        }
+        const subparts = DATA.subpartsByPart?.[part.id] || [];
+        if (subparts.length === 0) {
+          timelineCard.style.display = 'none';
+          return;
+        }
+        const segments = (subparts || [])
+          .map((sub) => {
+            const start = typeof sub.timepoint_seconds === 'number' ? sub.timepoint_seconds : Number(sub.timepoint_seconds);
+            const end = typeof sub.timepoint_end_seconds === 'number' ? sub.timepoint_end_seconds : Number(sub.timepoint_end_seconds);
+            if (!Number.isFinite(start)) return null;
+            return { id: sub.id, title: sub.title, start, end: Number.isFinite(end) ? end : start };
+          })
+          .filter(Boolean);
+        if (segments.length === 0) {
+          timelineCard.style.display = 'none';
+          return;
+        }
+        const partStart = typeof part.timepoint_seconds === 'number'
+          ? part.timepoint_seconds
+          : Math.min.apply(null, segments.map((s) => s.start));
+        const partEnd = typeof part.timepoint_end_seconds === 'number'
+          ? part.timepoint_end_seconds
+          : Math.max.apply(null, segments.map((s) => s.end));
+        const total = Math.max(1, partEnd - partStart);
+        timelineTrack.innerHTML = '';
+        segments.forEach((seg, idx) => {
+          const left = ((seg.start - partStart) / total) * 100;
+          const width = Math.max(2, ((seg.end - seg.start) / total) * 100);
+          const block = document.createElement('div');
+          block.className = 'timeline-segment';
+          block.style.left = left + '%';
+          block.style.width = width + '%';
+          block.textContent = seg.title;
+          timelineTrack.appendChild(block);
+          if (idx < segments.length - 1) {
+            const divider = document.createElement('div');
+            divider.className = 'timeline-divider';
+            divider.style.left = (left + width) + '%';
+            timelineTrack.appendChild(divider);
+          }
+        });
+        const playhead = document.createElement('div');
+        playhead.className = 'timeline-playhead';
+        const ratio = Math.min(1, Math.max(0, (currentTime - partStart) / total));
+        playhead.style.left = (ratio * 100) + '%';
+        timelineTrack.appendChild(playhead);
+        timelineRange.textContent = formatTime(partStart) + ' - ' + formatTime(partEnd);
+        timelineCard.style.display = '';
+      }
+
+      const allPeople = (() => {
+        const names = new Set();
+        Object.values(DATA.positionsByPart || {}).forEach((list) => {
+          (list || []).forEach((p) => names.add(p.student_name || 'Unknown'));
+        });
+        Object.values(DATA.subpartOrderBySubpart || {}).forEach((list) => {
+          (list || []).forEach((p) => names.add(p.student_name || 'Unknown'));
+        });
+        return Array.from(names).sort((a, b) => String(a).localeCompare(String(b)));
+      })();
+
+      if (personFilter) {
+        allPeople.forEach((name) => {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          personFilter.appendChild(opt);
+        });
+        personFilter.addEventListener('change', updateView);
+      }
+
+      let jumpTimer = null;
+      function jumpToTime(timeSeconds) {
+        if (typeof timeSeconds !== 'number' || !Number.isFinite(timeSeconds)) return;
+        if (jumpTimer) {
+          clearInterval(jumpTimer);
+          jumpTimer = null;
+        }
+        const wasPlaying = !audio.paused;
+        const countdownSeconds = 5;
+        let remaining = countdownSeconds;
+        if (jumpOverlay && jumpOverlayCount) {
+          jumpOverlay.classList.add('active');
+          jumpOverlayCount.textContent = String(remaining);
+        }
+        playBeep();
+        jumpTimer = setInterval(() => {
+          remaining -= 1;
+          if (jumpOverlayCount) {
+            jumpOverlayCount.textContent = String(Math.max(remaining, 0));
+          }
+          if (remaining > 0) {
+            playBeep();
+          }
+          if (remaining <= 0) {
+            clearInterval(jumpTimer);
+            jumpTimer = null;
+            if (jumpOverlay) jumpOverlay.classList.remove('active');
+            audio.currentTime = timeSeconds;
+            if (wasPlaying && audio.paused) {
+              audio.play().catch(() => {});
+            } else if (!wasPlaying) {
+              audio.pause();
+            }
+          }
+        }, 1000);
+      }
+
+      function renderPartsList(currentPartId, nextPartId, timeToNext) {
+        partsList.innerHTML = '';
+        const filterName = personFilter ? personFilter.value : '';
+        const partsToShow = filterName
+          ? orderedParts.filter((part) => {
+              const posNames = (DATA.positionsByPart[part.id] || []).map((p) => p.student_name);
+              if (posNames.includes(filterName)) return true;
+              const subparts = DATA.subpartsByPart?.[part.id] || [];
+              return subparts.some((sub) => (DATA.subpartOrderBySubpart?.[sub.id] || []).map((p) => p.student_name).includes(filterName));
+            })
+          : orderedParts;
+
+        partsToShow.forEach((part) => {
+          const card = document.createElement('div');
+          card.className = 'part-card';
+          if (part.id === currentPartId) card.classList.add('current');
+          if (part.id === nextPartId) card.classList.add('next');
+
+          const name = document.createElement('div');
+          name.className = 'part-name';
+          name.textContent = part.name;
+          card.appendChild(name);
+
+          const time = document.createElement('div');
+          time.className = 'part-time';
+          time.textContent = typeof part.timepoint_seconds === 'number' ? formatTime(part.timepoint_seconds) : 'No timepoint';
+          card.appendChild(time);
+
+          if (typeof part.timepoint_seconds === 'number') {
+            const jump = document.createElement('div');
+            jump.className = 'jump-link';
+            jump.textContent = 'Jump to part';
+            jump.addEventListener('click', () => jumpToTime(part.timepoint_seconds));
+            card.appendChild(jump);
+          }
+
+          if (part.id === nextPartId && timeToNext !== null && timeToNext <= 10) {
+            const count = document.createElement('div');
+            count.className = 'countdown';
+            count.textContent = Math.ceil(timeToNext);
+            card.appendChild(count);
+          }
+
+          const namesList = (DATA.positionsByPart[part.id] || []).map((p) => p.student_name);
+          const names = namesList
+            .map((n) => (filterName && n === filterName ? '**' + n + '**' : n))
+            .join(', ');
+          const list = document.createElement('div');
+          list.className = 'part-names';
+          list.innerHTML = names
+            ? names.replace(/\*\*(.*?)\*\*/g, '<strong class="filter-hit">$1</strong>')
+            : 'No positions';
+          card.appendChild(list);
+
+          const subparts = DATA.subpartsByPart?.[part.id] || [];
+          if (subparts.length > 0) {
+            const subWrap = document.createElement('div');
+            subWrap.className = 'subparts';
+
+            const subTitle = document.createElement('div');
+            subTitle.className = 'subpart-title';
+            subTitle.textContent = 'Subparts';
+            subWrap.appendChild(subTitle);
+
+            subparts.forEach((sub, idx) => {
+              const row = document.createElement('div');
+              row.className = 'subpart-row';
+              row.textContent = (idx + 1) + '. ' + sub.title + (sub.mode ? ' (' + sub.mode + ')' : '');
+              subWrap.appendChild(row);
+
+              if (sub.description) {
+                const meta = document.createElement('div');
+                meta.className = 'subpart-meta';
+                meta.textContent = 'Notes: ' + sub.description;
+                subWrap.appendChild(meta);
+              }
+
+              const subNamesList = (DATA.subpartOrderBySubpart?.[sub.id] || []).map((p) => p.student_name);
+              const subNames = subNamesList
+                .map((n) => (filterName && n === filterName ? '**' + n + '**' : n))
+                .join(', ');
+              if (subNames) {
+                const meta = document.createElement('div');
+                meta.className = 'subpart-meta';
+                meta.innerHTML = 'Assigned: ' + subNames.replace(/\*\*(.*?)\*\*/g, '<strong class="filter-hit">$1</strong>');
+                subWrap.appendChild(meta);
+              }
+
+              const timeStart = sub.timepoint_seconds !== undefined && sub.timepoint_seconds !== null ? formatTime(sub.timepoint_seconds) : '--:--';
+              const timeEnd = sub.timepoint_end_seconds !== undefined && sub.timepoint_end_seconds !== null ? formatTime(sub.timepoint_end_seconds) : '--:--';
+              const timeMeta = document.createElement('div');
+              timeMeta.className = 'subpart-meta';
+              timeMeta.textContent = 'Time: ' + timeStart + ' / ' + timeEnd;
+              subWrap.appendChild(timeMeta);
+
+              if (typeof sub.timepoint_seconds === 'number') {
+                const jump = document.createElement('div');
+                jump.className = 'jump-link';
+                jump.textContent = 'Jump to ' + sub.title + ' subpart';
+                jump.addEventListener('click', () => jumpToTime(sub.timepoint_seconds));
+                subWrap.appendChild(jump);
+              }
+            });
+
+            card.appendChild(subWrap);
+          }
+          partsList.appendChild(card);
+        });
+      }
+
+      function renderSummary() {
+        if (!summaryParts) return;
+        summaryParts.innerHTML = '';
+        orderedParts.forEach((part) => {
+          const section = document.createElement('div');
+          section.className = 'summary-section';
+
+          const header = document.createElement('div');
+          header.className = 'summary-header';
+
+          const title = document.createElement('div');
+          title.className = 'summary-part';
+          title.textContent = part.name;
+          header.appendChild(title);
+
+          const time = document.createElement('div');
+          time.className = 'summary-time';
+          const start = typeof part.timepoint_seconds === 'number' ? formatTime(part.timepoint_seconds) : '--:--';
+          const end = typeof part.timepoint_end_seconds === 'number' ? formatTime(part.timepoint_end_seconds) : '--:--';
+          time.textContent = 'Time: ' + start + ' / ' + end;
+          header.appendChild(time);
+
+          if (part.description) {
+            const notes = document.createElement('div');
+            notes.className = 'summary-notes';
+            notes.textContent = 'Notes: ' + part.description;
+            header.appendChild(notes);
+          }
+          section.appendChild(header);
+
+          const subparts = DATA.subpartsByPart?.[part.id] || [];
+          if (subparts.length > 0) {
+            const subWrap = document.createElement('div');
+            subWrap.className = 'summary-subparts summary-indent-1';
+            subparts.forEach((sub, idx) => {
+              const row = document.createElement('div');
+              row.className = 'summary-subpart';
+              row.textContent = (idx + 1) + '. ' + sub.title;
+              subWrap.appendChild(row);
+
+              if (sub.description) {
+                const subNotes = document.createElement('div');
+                subNotes.className = 'summary-notes summary-indent-1';
+                subNotes.textContent = 'Notes: ' + sub.description;
+                subWrap.appendChild(subNotes);
+              }
+
+              const subPeopleSet = new Set();
+              (DATA.subpartOrderBySubpart?.[sub.id] || []).forEach((p) => subPeopleSet.add(p.student_name || 'Unknown'));
+              const subPeople = Array.from(subPeopleSet).sort((a, b) => String(a).localeCompare(String(b)));
+              const subPeopleLine = document.createElement('div');
+              subPeopleLine.className = 'summary-people summary-indent-1';
+              subPeopleLine.textContent = subPeople.length > 0 ? 'Assigned: ' + subPeople.join(', ') : 'Assigned: --';
+              subWrap.appendChild(subPeopleLine);
+            });
+            section.appendChild(subWrap);
+          }
+
+          const peopleSet = new Set();
+          (DATA.positionsByPart[part.id] || []).forEach((p) => peopleSet.add(p.student_name || 'Unknown'));
+          subparts.forEach((sub) => {
+            (DATA.subpartOrderBySubpart?.[sub.id] || []).forEach((p) => peopleSet.add(p.student_name || 'Unknown'));
+          });
+          const people = Array.from(peopleSet).sort((a, b) => String(a).localeCompare(String(b)));
+          const peopleLine = document.createElement('div');
+          peopleLine.className = 'summary-people summary-indent-1';
+          peopleLine.textContent = people.length > 0 ? 'People: ' + people.join(', ') : 'People: --';
+          section.appendChild(peopleLine);
+
+          summaryParts.appendChild(section);
+        });
+      }
+
+      function updateView() {
+        const currentTime = audio.currentTime || 0;
+        const idx = getCurrentIndex(currentTime);
+        const currentPart = idx >= 0 ? timepointParts[idx] : null;
+        const nextPart = idx >= 0 ? timepointParts[idx + 1] : null;
+        const timeToNext = nextPart ? Math.max(0, (nextPart.timepoint_seconds || 0) - currentTime) : null;
+
+        currentName.textContent = currentPart ? currentPart.name : '-';
+        nextName.textContent = nextPart ? nextPart.name : '-';
+
+        if (timeToNext !== null && timeToNext <= 10) {
+          nextCountdown.textContent = Math.ceil(timeToNext);
+          nextReady.textContent = 'GET READY';
+        } else {
+          nextCountdown.textContent = '';
+          nextReady.textContent = '';
+        }
+
+        if (ringToggle.checked) {
+          if ((prevTimeToNext === null || prevTimeToNext > 10) && timeToNext !== null && timeToNext <= 10) {
+            playRing();
+          }
+        }
+        prevTimeToNext = timeToNext;
+
+        renderGrid(currentGrid, currentPart ? DATA.positionsByPart[currentPart.id] || [] : [], 'current');
+        renderGrid(nextGrid, nextPart ? DATA.positionsByPart[nextPart.id] || [] : [], 'next');
+        renderTimeline(currentPart, currentTime);
+        const legendPositions = []
+          .concat(currentPart ? DATA.positionsByPart[currentPart.id] || [] : [])
+          .concat(nextPart ? DATA.positionsByPart[nextPart.id] || [] : []);
+        renderLegend(legendPositions);
+        renderPartsList(currentPart ? currentPart.id : null, nextPart ? nextPart.id : null, timeToNext);
+      }
+
+      audio.addEventListener('timeupdate', updateView);
+      audio.addEventListener('play', updateView);
+      audio.addEventListener('seeked', updateView);
+      setInterval(updateView, 500);
+      renderSummary();
+      updateView();
+    </script>
+  </body>
+</html>
